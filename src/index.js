@@ -19,15 +19,36 @@
 // // console.log(`Server running at http://${hostname}:${port}/`);
 // // });
 
-const express = require('express');
-const app = express();
-const hostname = 'localhost';
-const port = 3002;
+const express = require('express'); //commonjs
+const app = express(); //app express
+const path = require('path');
+require('dotenv').config();
 
+//if PORT doesn't exists, 8888 will be the port 
+const port = process.env.PORT || 8888;
+const hostname = process.env.HOST_NAME;
+
+//config template engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+//config static files: image/css/js
+app.use(express.static(path.join(__dirname, 'public')));
+
+//khai bao route
 app.get('/', (req, res) => {
-    res.send("Hello World!")
-})
+    res.send("Hello World! with Dinhgiaan")
+});
 
-app.listen(port, () => {
+app.get('/abc', (req, res) => {
+    res.send("Check route")
+});
+
+app.get('/dinhgiaan', (req, res) => {
+    // res.send("<h1>Holly molly</h1>")
+    res.render('sample.ejs')
+});
+
+app.listen(port, hostname, () => {
     console.log(`Running on ${port}`)
-})
+});
