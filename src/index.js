@@ -10,6 +10,10 @@ const connection = require('./config/database');
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
 
+//config req.body
+app.use(express.json()) // for json
+app.use(express.urlencoded({ extended: true })) // for form data
+
 //config template engine
 configViewEngine(app);
 
@@ -20,7 +24,7 @@ app.use('/', webRoutes);
 
 // simple query
 connection.query(
-    'select * from Persons p',
+    'select * from Users u',
     function (err, results, fields) {
         console.log(">>> check results (sever): ", results);
         // console.log(">>> check fields: ", fields);
