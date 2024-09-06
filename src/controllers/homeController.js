@@ -1,13 +1,36 @@
+const connection = require('../config/database')
+
 const getHomepage = (req, res) => {
-    res.send("Hello World! with Dinhgiaan")
+    let users = [];
+
+    // connection.query(
+    //     'select * from Persons p',
+    //     function (err, results, fields) {
+    //         users = results;
+    //         console.log(">>> check results: ", results);
+
+    //         // console.log(">>> check users: ", users);
+    //         res.send(JSON.stringify(users))
+    //     }
+    // );
+    res.send("Homepage")
 }
 
-const getABC = (req, res) => {
-    res.send("Check ABC")
+const getUsers = (req, res) => {
+    let users = [];
+
+    connection.query(
+        'select * from Persons p',
+        function (err, results, fields) {
+            users = results;
+            // console.log(">>> check users: ", users);
+            res.send(JSON.stringify(users))
+        }
+    );
 }
 
 const getDinhgiaan = (req, res) => {
     res.render('sample.ejs')
 }
 
-module.exports = { getHomepage, getABC, getDinhgiaan }
+module.exports = { getHomepage, getUsers, getDinhgiaan }
